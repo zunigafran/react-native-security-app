@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { UserInactivityProvider } from '@/context/UserInactivity';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function RootLayout() {
@@ -18,12 +19,24 @@ export default function RootLayout() {
   }
 
   return (
+  <UserInactivityProvider>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
+        <Stack.Screen name="(modals)/white" options={{
+          headerShown: false,
+          animation: 'none'
+        }}
+        />
+        <Stack.Screen name="(modals)/lock" options={{
+          headerShown: false,
+          animation: 'none'
+        }}
+        />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
+  </UserInactivityProvider>
   );
 }
